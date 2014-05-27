@@ -1,0 +1,10 @@
+### DOXYGEN ###
+OPTION(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" ON)
+IF(BUILD_DOCUMENTATION)
+  	FIND_PACKAGE(Doxygen)
+  	IF(NOT DOXYGEN_FOUND)
+    	MESSAGE(FATAL_ERROR "Doxygen is needed to build the documentation.")
+  	ENDIF()
+	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doxygen.conf ${CMAKE_CURRENT_BINARY_DIR}/doxygen.out.conf @ONLY)
+	ADD_CUSTOM_TARGET(doc ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen.out.conf WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} COMMENT ”Generating API documentation with Doxygen” VERBATIM)
+ENDIF()

@@ -1,0 +1,100 @@
+\chapter{Algorithmique du jeu}
+
+%----------------------------------------------------------------------------------------
+%	DÉFINITIONS
+%----------------------------------------------------------------------------------------
+\section{Définitions}
+Les mots que nous allons utiliser pour décrire un objet ou un concept précis mis en oeuvre dans la résolution du problème sont des mots pouvant donner lieu à de nombreuses lectures et approches différentes qui peuvent fausser les démonstrations qui s'appuient dessus. Pour fixer les idées, nous nous devons d'imposer des bases, seul appui pour nos raisonnements ultérieurs.
+
+\subsection{Cartes}
+\label{ssect:cartes}
+
+Une \textit{case} $c$ sera considérée comme un élément admettant plusieurs états possibles, représentés par les cas suivants :
+\begin{itemize}
+\item une case associée au symbole $\star$ représente une position de départ possible pour la course,
+\item une case associée à un entier de 0 à 9 fait partie de la piste du circuit, et est donc la zone parcourable par les voitures,
+\item une case est enfin associée au symbole $\#$ lorsqu'elle représente un obstacle (mur bordant la piste par exemple), qui n'est pas accessible au voitures.
+\end{itemize}
+
+Une \textit{carte} $\mathcal{C}$ (c.f. exemple Figure~\vref{fig:ex_carte}) est une structure contenant des cases, organisées sous forme d'une matrice de dimension $n\times m$, et sur laquelle est définie une fonction $\eta_\mathcal{C}$ à valeur dans l'ensemble $\Omega = \{\star, \#, [1-9]\}$ telle que $\forall c\in \mathcal{C}, \exists \omega\in \Omega, \eta_\mathcal{C} = \omega$. Cette fonction permet donc d'accéder à l'état d'une case.
+
+Un case sera dite \textit{valide} si son état est dans l'ensemble $\Omega_V = \{\star, [1-9]\}$.
+
+On défini la notion de \textit{chemin} sur la carte comme une séquence de cases - donc de positions - prises par un véhicule. Un \textit{parcours} est un chemin partant et aboutissant dans une case étiquetée par $\star$. Un parcours est dit \textit{valide} si et seulement si les cases sont parcourue dans l'ordre croissant depuis la position de départ, à partir d'une case étiquetée par 1 et que les coups élémentaires sont valides (voir Section~\vref{ssect:coups}). Enfin, un parcours est \textit{complet} - appelé aussi \textit{tour} - si il est valide et que l'ensemble des positions élémentaires fait apparaitre au moins une fois chaque chiffre visible sur la carte. La position d'arrivé est soit une case étiquetée par $\star$, soit une case étiquetée par $1$.
+
+Notons qu'une carte est \textit{valide} si et seulement si elle respecte les contraintes suivantes :
+\begin{enumerate}
+\item elle comporte au moins une case à l'état $\star$,
+\item l'ensemble formé par les cases d'étiquette dans $\Omega_V$ est connexe,
+\item il existe au moins un tour.
+\end{enumerate}
+
+\begin{verbbox}
+#######
+#33332#
+#4###2#
+#4###2#
+#*1111#
+#######
+\end{verbbox}
+\begin{figure}[ht]
+	\centering
+	\theverbbox
+	\caption{Exemple de carte $7\times 6$}
+	\label{fig:ex_carte}
+\end{figure}
+
+\subsection{Coups}
+\label{ssect:coups}
+
+Le jeu \textit{Vector Racer} présente des règles particulières quant aux coups possibles à chaque étape, du fait de la considération de la vitesse et de l'accélération du véhicule. Le principe général est le suivant :
+\begin{enumerate}
+\item on considère le vecteur vitesse du véhicule à chaque étape : $\begin{pmatrix}x\\y\end{pmatrix}$ (composantes dans le repère orthonormé direct associé à la grille),
+\item étant donné une séquence d'accélérations possibles (dépendantes des performances du véhicule), par exemple $\begin{pmatrix}dx\\dy\end{pmatrix}$, le vecteur vitesse à l'étape suivante est $\begin{pmatrix}x+dx\\y+dy\end{pmatrix}$.
+\end{enumerate}
+
+Ce vecteur vitesse et la séquence des accélérations possibles conditionnent ainsi l'accès à certaines cases à chaque étape.
+
+Un coup est \textit{valide} si et seulement si :
+\begin{enumerate}
+\item les positions de départ et d'arrivée sont valides sur la grille (c.f. Section~\vref{ssect:cartes}),
+\item la variation du vecteur vitesse induite par ce coup correspond à une accélération possible (parmis celle de la séquence d'accélérations que l'on considère).
+\end{enumerate}
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{| c || c | c | c |}
+	\hline
+	Accélérations possibles & Coups effectuées & Variation de vitesse & Case \\ \hline
+	1,1 & &  & $\star$ \\ \hline
+	-1,-1 & 1,0 & 1,0 & 1 \\ \hline
+	-1,0 & 2,0 & 1,0 & 1 \\ \hline
+	-1,1 & 1,1 & -1,1 & 1 \\ \hline
+	0,-1 & 0,1 & -1,0 & 2 \\ \hline
+	0,0 & -1,1 & -1,0 & 2 \\ \hline
+	0,1 & -2,0 & -1,-1 & 2 \\ \hline
+	1,-1 & -1,-1 & 1,-1 & 3 \\ \hline
+	1,0 & 0,-1 & 1,0 & 3 \\ \hline
+	& 0,-1 & 0,0 & 4 \\ \hline
+	& 1,0 & 1,1 & $\star$ \\
+	\hline
+	\end{tabular}
+	\caption{Exemple de liste de coups possibles pour la carte Figure~\vref{fig:ex_carte}}
+	\label{tab:ex_coups}
+\end{table}
+
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	PROBLÈMES
+%----------------------------------------------------------------------------------------
+\section{Problèmes}
+\subsection{Spécifications}
+
+\begin{verbatim}
+Problème : Résolution
+Entrée : Une grille G représentant la carte réalisable.
+Sortie : Une liste de coups valide.
+\end{verbatim}
+
+

@@ -1,0 +1,30 @@
+####################################
+
+The coding conventions are the following :
+
+####################################
+
+Modules : 
+
+A module is a .c and a .h with the same name.
+Some modules may be included in other modules 
+when they are only used by the one including them
+
+####################################
+
+Functions : 
+
+Prototypes must meet the following pattern : 
+
+	   <module_name>_<function_scope> ( arguments ) 
+	   
+	   {
+	    function body;
+	    }
+
+
+####################################
+
+Structure : 
+
+No convention needed or decided yet.

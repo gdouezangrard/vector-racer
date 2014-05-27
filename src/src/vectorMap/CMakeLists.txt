@@ -1,0 +1,12 @@
+### SETUP LIBRARY ###
+SET(LIB_NAME vectorMap)
+SET(HEADER_PATH ${Vector_SOURCE_DIR}/include/${LIB_NAME})
+SET(TARGET_H
+    ${HEADER_PATH}/read_map.h
+)
+SET(TARGET_SRC
+    read_map.c
+)
+
+### REGISTER ###
+ADD_LIBRARY(${LIB_NAME} ${TARGET_SRC} ${TARGET_H})

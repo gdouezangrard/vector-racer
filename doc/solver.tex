@@ -1,0 +1,30 @@
+\section{Résolution}
+\subsection{Choix de l'algorithme}
+Le but du jeu Vector Racer est de trouver le plus court chemin faisant le parcours d'une grille. Les notions de chemins et parcours nous ont poussés à considérer plusieurs algorithmes connues sur les graphes susceptibles de résoudre ce problème. Il s'agit en effet du parcours en largeur, du parcours en profondeur, de Dijkstra et de A*. Ces algorithmes garantissent tous des solutions, néamoins ils sont plus ou moins optimales. Le parcours en profondeur par exemple ne renvoie pas le plus court chemin. A* quand à lui nécessite des heuristiques très difficles à généraliser vu le grand nombre de cartes possibles. Dijkstra et le parcours en largeur à l'opposée semblent très adéquats au problème, ce sont d'ailleurs les deux algorithmes que nous avons choisis d'implémenter pour chercher les solutions.
+
+En effet, ces deux algorithmes évoluent progressivement vers la solution en minimisant le nombre de coups. Dans le cas du jeu Vector Racer, la connaissance seulement de la position et la vitesse permet à chaque étape de générer un ordre convenable de successeurs, vers lequels le joueur peut se déplacer en maximisant sa vitesse tout en se rapprochant de la destination. Dans la section qui suit, nous allons présenter l'implémentation de l'algorithme de résolution. Nous allons aussi détailler quelques fonctions auxiliaires essentielles dans la prise de décision. \\
+
+\begin{algorithm}[H]
+ \KwData{carte}
+ \KwResult{solution}
+ f $\leftarrow$ file-vide()\;
+ Enfiler le noeud position de départ\;
+ \While{no-vide(f)}{
+  Défiler\;
+  Colorer le noeud\;
+  Générer les 8 successeurs possibles\;
+  Parmis ces successeurs, choisir ceux qui maximisent l'accélération\;
+  Chaîner les successeurs séléctionnés au noeud coloré\;
+  	\For{Chaque successeur}{
+		\eIf{Le successeur est le noeud d'arrivée}{
+			Retourner le noeud\;
+			}
+			{
+			Enfiler le noeud\;
+			}	
+	}
+   
+  
+ }
+ \caption{Algorithme de résolution d'une grille}
+\end{algorithm}

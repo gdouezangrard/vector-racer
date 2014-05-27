@@ -1,0 +1,11 @@
+FOREACH(libfolder
+        vectorMap
+	vectorSDL
+	vectorSteps
+	vectorErrno
+        vectorDll
+	vectorGame
+	vectorSolver
+		)
+    ADD_SUBDIRECTORY(${libfolder})
+ENDFOREACH()

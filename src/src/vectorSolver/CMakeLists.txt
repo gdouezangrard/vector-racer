@@ -1,0 +1,12 @@
+### SETUP LIBRARY ###
+SET(LIB_NAME vectorSolver)
+SET(HEADER_PATH ${Vector_SOURCE_DIR}/include/${LIB_NAME})
+SET(TARGET_H
+    ${HEADER_PATH}/solver.h
+)
+SET(TARGET_SRC
+    solver.c
+)
+
+### REGISTER ###
+ADD_LIBRARY(${LIB_NAME} ${TARGET_SRC} ${TARGET_H})

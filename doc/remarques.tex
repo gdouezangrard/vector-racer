@@ -1,0 +1,20 @@
+\chapter{Remarques et améliorations possibles}
+
+\section{Fuites mémoire}
+
+Malheureusement il reste des fuites mémoire.
+
+La plupart sont dûes à la SDL. Valgrind indique que des allocations de la fonction SDL\_Init() n'ont pas été libérées. Notre connaissance de SDL n'étant pas parfaite nous ne savons pas comment régler ces fuites mémoires.
+
+Il reste cependant des fuites mémoires qui correspondent à la libération de la structure map et à la libération de structures dans le solveur.
+Nous n'avons pu régler ce problème avant la limite de temps malgrès nos tentative de correction. C'est donc un travail qu'il reste à faire.
+
+\section{Idées supplémentaires}
+
+De nombreuses possibilités d'amélioration existent.
+En voici quelques unes:
+\begin{itemize}
+	\item L'optimisation de la résolution.
+	\item La possibilité en jouant de revenir en arrière sur les choix effectués.
+    \item L'affichage de la solution en parallèle de la phase de jeu.
+\end{itemize}

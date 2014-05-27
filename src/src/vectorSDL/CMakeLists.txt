@@ -1,0 +1,12 @@
+### SETUP LIBRARY ###
+SET(LIB_NAME vectorSDL)
+SET(HEADER_PATH ${Vector_SOURCE_DIR}/include/${LIB_NAME})
+SET(TARGET_H
+    ${HEADER_PATH}/vector_sdl.h
+)
+SET(TARGET_SRC
+    vector_sdl.c
+)
+
+### REGISTER ###
+ADD_LIBRARY(${LIB_NAME} ${TARGET_SRC} ${TARGET_H})
